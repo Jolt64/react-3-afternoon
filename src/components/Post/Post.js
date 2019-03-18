@@ -50,6 +50,7 @@ export default class Post extends Component {
   }
 
   render() {
+    
     // This is destructuring! You can also think of it as being written as so:
       // const editing = this.state.editing
       // const showMasterMenu = this.state.showMasterMenu
@@ -66,7 +67,7 @@ export default class Post extends Component {
           {/* Drop-down menu. Remember that the "showMasterMenu" variable has been destructured off of this.state */}
           <div className="Post__master-menu" style={ { display: showMasterMenu ? 'flex' : 'none' } }>
             <span onClick={ this.showEdit }>Edit</span>
-            <span>Delete</span>
+            <span onClick={() => this.props.deletePostFn(this.props.id)}>Delete</span>
           </div>
         </div>
 
@@ -79,9 +80,9 @@ export default class Post extends Component {
           <span className="Post__name">DevMountain</span>
           <span className="Post__handle">@DevMountain</span>
 
-          <span className="Post__date">- POST DATE GOES HERE</span>
+          <span className="Post__date">{this.props.post.date}</span>
         </div>
-
+{/* // {this.props.posts.date} */}
         {/* This is where the text goes. Notice the turnary statement. The turnary statement decides to display either the text OR the editor view
             You can also think of it as being written as so:
               if( this.state.editing === true ) {
@@ -95,10 +96,13 @@ export default class Post extends Component {
             // This has been pulled off of this.state via destructuring
             editing
             ?
-              <Edit text=""
-                    hideEdit={ this.hideEdit } />
+              <Edit updatePostFn={this.props.updatePostFn} 
+              id={this.props.id} 
+              text={this.props.post.text}
+              hideEdit={ this.hideEdit } 
+              />
             :
-              <span className="Post__text">POST TEXT GOES HERE</span>
+              <span className="Post__text">{this.props.post.text}</span>
           }
         </div>
 
